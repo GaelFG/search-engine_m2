@@ -5,15 +5,12 @@ import java.util.Iterator;
 import java.util.TreeMap;
 
 /** 
- * Les objets Term contiennent pour un identifiant donnÃ© le texte associÃ©, et pour chaque document, la frï¿½quence du terme dans le document
- *  
+ * Les objets Term contiennent pour un identifiant donné le texte associé et pour chaque document, la fréquence du terme dans le document
  * */
-
-public final class Term {
-  
+public final class Term {  
   /** id du terme */
   public int term_id;
-  /** texte du terme*/
+  /** texte du terme */
   public String text;
   /** frequence du terme dans toute la collection*/
  // public int freq;
@@ -38,7 +35,7 @@ public final class Term {
  }
 
   /**
-  * Construuit un nouveau terme
+  * Construit un nouveau terme
   * @param id identifiant du terme
   * @param text texte du terme
   * @param frequency TreeMap contenant des objets TermFrequency
@@ -52,31 +49,21 @@ public final class Term {
  // this.doc_count = doc_nb;
   this.frequency = new TreeMap();
   this.frequency = frequency;
+  }
 
-  
-  } //Term()
-
- 
-  
-  
-  
   /**
   * Prints a Term object
   */
   public void PrintTerm() {
-          
   System.out.print("Term :");
   System.out.print(term_id+"\t"+text);
  // System.out.print("\t"+this.freq+"\t"+this.doc_count+"\t "+"\t");
-
           for (Iterator it = frequency.keySet().iterator(); it.hasNext(); ){
                 TermFrequency tempTermFrequency=new TermFrequency();
                tempTermFrequency = (TermFrequency) frequency.get(it.next());
                 tempTermFrequency.PrintTermFrequency();
            }  
-  System.out.println();           
-          
-  } //PrintTerm()
-  
-  
-} //Term.java
+  System.out.println();                  
+  }
+ 
+}
