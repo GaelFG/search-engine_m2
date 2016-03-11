@@ -10,6 +10,8 @@ import java.io.IOException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import utils.FileList;
 import store.BaseWriter;
 
@@ -83,9 +85,37 @@ public final class IndexWriter {
 				// parsage du fichier
 				Document document = Jsoup.parse(fichier, "UTF-8");	
 				//on recupère le texte contenu dans le body et on l'index
-				Element body = document.body();
+				//Element body = document.body();
+				Elements paragraphes = document.select("p");
+				for(Element p : paragraphes){
+					constructTerme(p.text());
+				}
+				Elements huns = document.select("h1");
+				for(Element hun : huns){
+					constructTerme(hun.text());
+				}
+				Elements titles = document.select("title");
+				for(Element title : titles){
+					constructTerme(title.text());
+				}
+				Elements metas = document.select("meta");
+				for(Element meta : metas){
+					constructTerme(meta.text());
+				}
+				Elements hdeuxs = document.select("h2");
+				for(Element hdeux : hdeuxs){
+					constructTerme(hdeux.text());
+				}
+				Elements ems = document.select("em");
+				for(Element em : ems){
+					constructTerme(em.text());
+				}
+				Elements bs = document.select("b");
+				for(Element b : bs){
+					constructTerme(b.text());
+				}
 				//System.out.println("corps doc "+body.text());
-				constructTerme(body.text());
+				//constructTerme(body.text());
 			} catch (IOException io){
 				System.out.println("Erreur de d'entree/sortie");
 			}
@@ -141,6 +171,9 @@ public final class IndexWriter {
 		texte=texte.replace('{',' ');
 		texte=texte.replace('&',' ');
 		texte=texte.replace('©',' ');
+		texte=texte.replace('«',' ');
+		texte=texte.replace('»',' ');
+		
 		String[] mots=texte.split(" ");
 		for (int j=0;j<mots.length; j++) {
 			String mot=mots[j];		// on pourrair utiliser Porter ou la troncature ...!		

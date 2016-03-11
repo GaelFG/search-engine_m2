@@ -90,7 +90,7 @@ public class BaseWriter {
 	System.out.println("Table Documents creee");
 	
 	
-	rs = stmt.execute("create table Termes (term_id int primary key, term varchar(20) NOT NULL );");
+	rs = stmt.execute("create table Termes (term_id int primary key, term varchar(200) NOT NULL );");
 		
 	rs = stmt.execute("create table TermesDoc (term_id int, doc_id int, poids real, PRIMARY KEY(term_id,doc_id));");
     System.out.println("Table Termes creees");
