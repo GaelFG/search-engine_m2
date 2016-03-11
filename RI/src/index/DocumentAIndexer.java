@@ -11,7 +11,7 @@ public final class DocumentAIndexer {
 	/** Identifiant du document*/
 	public int id;  
 	/** Nom du document*/
-	public String name=null;
+	public String name = null;
 
 	/** Constuit un nouveau document. */
 	public DocumentAIndexer() { }
