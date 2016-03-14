@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.TreeMap;
 
 /** 
- * Les objets Term contiennent pour un identifiant donné le texte associé et pour chaque document, la fréquence du terme dans le document
+ * Les objets Term contiennent pour un identifiant donnï¿½ le texte associï¿½ et pour chaque document, la frï¿½quence du terme dans le document
  * */
 public final class Term {  
   /** id du terme */
@@ -57,7 +57,7 @@ public final class Term {
   public void PrintTerm() {
   System.out.print("Term :");
   System.out.print(term_id+"\t"+text);
- // System.out.print("\t"+this.freq+"\t"+this.doc_count+"\t "+"\t");
+  //System.out.print("\t"+this.freq+"\t"+this.doc_count+"\t "+"\t");
           for (Iterator it = frequency.keySet().iterator(); it.hasNext(); ){
                 TermFrequency tempTermFrequency=new TermFrequency();
                tempTermFrequency = (TermFrequency) frequency.get(it.next());

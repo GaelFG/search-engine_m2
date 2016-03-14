@@ -173,7 +173,7 @@ public final class IndexWriter {
 		texte=texte.replace('©',' ');
 		texte=texte.replace('«',' ');
 		texte=texte.replace('»',' ');
-		
+		texte=texte.replace('…',' ');
 		String[] mots=texte.split(" ");
 		for (int j=0;j<mots.length; j++) {
 			String mot=mots[j];		// on pourrair utiliser Porter ou la troncature ...!		
