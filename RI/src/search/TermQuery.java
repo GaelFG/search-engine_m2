@@ -5,6 +5,9 @@ import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.TreeMap;
 import java.util.Vector;
+
+import org.tartarus.snowball.ext.frenchStemmer;
+
 import java.util.Iterator;
 import index.Term;
 import index.TermFrequency;
@@ -21,12 +24,21 @@ final public class TermQuery {
 	/**
 	 * Constructeur : construit le vecteur des termes de la requete
 	 */
-	public TermQuery(String query){  
+	public TermQuery(String query){
+		frenchStemmer stemmer = new frenchStemmer();
 		terms=new Vector<TermQ>();
 		System.out.println("La requete est:"+query);
 		String[] termstable = query.split(" ");
 		//System.out.println(termstable.length);
-		// on pourrait lemmatiser mais on ne le fait pas!
+		// on lemmatise
+		for (int i = 0 ; i < termstable.length ; i++ ) {
+			String mot = termstable[i];
+			stemmer.setCurrent(mot);
+			if (stemmer.stem()){
+				termstable[i] = stemmer.getCurrent();
+			}
+		}
+		
 		for (int i=0;i<termstable.length;i++) {
 			String[] termpoid = termstable[i].split(":");
 			TermQ monTerme = null;

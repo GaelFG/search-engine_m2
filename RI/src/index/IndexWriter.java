@@ -15,6 +15,8 @@ import org.jsoup.select.Elements;
 import utils.FileList;
 import store.BaseWriter;
 
+import org.tartarus.snowball.ext.frenchStemmer;
+
 /**
  * IndexWriter ecrit l'index (c'est a dire les 3 tables de la BD). Les documents sont parses avec Jsoup.
  */
@@ -145,6 +147,7 @@ public final class IndexWriter {
 	 * Permet de remplir la table de posting avec le texte.
 	 */
 	public final void constructTerme (String texte) {
+		frenchStemmer stemmer = new frenchStemmer();
 		Hashtable new_document= new Hashtable();
 		// il faut traiter tout ce texte...
 		// on passe en minuscules
@@ -174,11 +177,18 @@ public final class IndexWriter {
 		texte=texte.replace('«',' ');
 		texte=texte.replace('»',' ');
 		texte=texte.replace('…',' ');
+
 		String[] mots=texte.split(" ");
-		for (int j=0;j<mots.length; j++) {
-			String mot=mots[j];		// on pourrair utiliser Porter ou la troncature ...!		
+		for (int j = 0 ; j < mots.length ; j++) {
+			String mot=mots[j];		// on pourrair utiliser Porter ou la troncature ...!
 			// on verifie que le mot n'est pas un mot vide ou un mot qui contient un @ ou un %
 			if (Stoptable.get(mot)==null) {
+				//TODO test lemmatisation lematisation
+				stemmer.setCurrent(mot);
+				if (stemmer.stem()){
+				    mot = stemmer.getCurrent();
+				}
+				//////////////////////////////////// TODO test lemmatisation lematisation
 				TextObject myTermText = new TextObject(mot);
 				term_count++;
 				if (postingTable.containsKey(myTermText)) { // si la table de posting contient deja le terme car rencontrer soit dans une autre doc, soit dans le même
