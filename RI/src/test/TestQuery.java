@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.*;
 import java.util.*;
 import java.sql.SQLException;
+
+import search.TermQ;
 import search.TermQuery;
 import store.BaseReader;
 
@@ -48,10 +50,26 @@ public class TestQuery {
 
 			for (Iterator it=cles.listIterator();it.hasNext();) {
 				// on recupere l'id du document et on va chercher son nom
+				double tfidf_total = 0;
 				Integer docid = (Integer) it.next();
 				String nom_fichier= base.document(docid).name;
-				out.write(nom_fichier+"\t"+results.get(docid)+"\n");
-				//out.write(node.getTextContent()+"\n\n");			
+				//out.write(nom_fichier+"\t"+results.get(docid)+"\n");
+				//out.write(node.getTextContent()+"\n\n");	
+				
+				//calcul de tf, idf et idtf
+				for(TermQ term : query.terms) {
+					int poids = base.getPoidsTerm(docid, term.text);
+					int nbtotal = base.getDocTermCount(docid);
+					double tf = (float) poids/nbtotal;
+					double idf = (float)(Math.log((float)138/results.size()));
+					double tfidf = tf*idf;
+					tfidf_total = tfidf_total + tfidf;					
+				}
+				out.write(nom_fichier+"\t"+tfidf_total+"\n");
+				//double tf = base.getPoidsTerm(docid, terme_id)
+				//double idf = Math.log(138/results.size());
+				//double tfidf = (Float)results.get(docid)*idf;
+				//out.write(nom_fichier+"\t"+tfidf+"\n");
 			}
 			base.close();
 			out.close();

@@ -10,6 +10,9 @@ import java.sql.PreparedStatement;
 import java.sql.Blob;
 
 import java.util.Vector;
+
+import org.tartarus.snowball.ext.frenchStemmer;
+
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Hashtable;
@@ -169,10 +172,19 @@ public static void insertPosting(Hashtable myPostingTable) throws SQLException{
        for (Enumeration e=myPostingTable.elements(); e.hasMoreElements(); ) {
                
                 Term tempTerm=new Term();
+                //Term terme_lemmatise;
                 tempTerm = (Term) e.nextElement();
+                
+                frenchStemmer stemmer = new frenchStemmer();
+                stemmer.setCurrent(tempTerm.text);
+    			//if (stemmer.stem()){
+    			Term terme_lemmatise = new Term(stemmer.getCurrent());
+    			System.out.println(terme_lemmatise.text);
+    			//}
+                
                 boolean rs;
 				//System.out.println("j essaie :"+tempTerm.text);
-                String query = "insert into Termes (term_id,term) values ("+tempTerm.term_id+",\'"+tempTerm.text+"\')";
+                String query = "insert into Termes (term_id,term) values ("+tempTerm.term_id+",\'"+terme_lemmatise.text+"\')";
                 try {    stmt.execute(query);
                 }
                 catch (SQLException sqlEx) { System.out.println(query +"Erreur dans l'insertion du Term : "+ sqlEx.getMessage());

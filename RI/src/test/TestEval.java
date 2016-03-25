@@ -2,6 +2,7 @@ package test;
 
 import java.io.*;
 import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * Cette classe permet de sortir les precisions � 5,10 et 25 pour un fichier resultat et un fichier qrel donne
@@ -47,12 +48,14 @@ public class TestEval {
 
 			while ((ligne=res.readLine()) !=null) {
 				String[] maligne2=ligne.split("\t");
-				String[] infodoc=maligne2[0].split("/");
+				String[] infodoc=maligne2[0].split(Pattern.quote("\\"));
 				String doc=infodoc[infodoc.length-1];
-				System.out.println("document"+doc);
+				System.out.println("document : "+doc);
 				for (int i=0; i<relevants.size();i++) {
 					RelevantDoc r = (RelevantDoc) relevants.elementAt(i);
 					//System.out.println("\t"+r.node+"-"+r.doc);
+					System.out.println(doc);
+					//System.out.println(r.doc);
 					if (doc.compareTo(r.doc)==0) {
 						pertinent++;
 						boolean ok= relevants.remove(r);
@@ -64,9 +67,12 @@ public class TestEval {
 				rang++;
 			}
 			res.close();
-			System.out.println("P@5: "+p5);
-			System.out.println("P@10: "+p10);
-			System.out.println("P@25 :"+p25);
+			System.out.println(p5);
+			System.out.println(p10);
+			System.out.println(p25);
+			System.out.println("P@5: "+(float)p5/5);
+			System.out.println("P@10: "+(float)p10/10);
+			System.out.println("P@25 :"+(float)p25/25);
 		}
 		catch (IOException io) {System.out.println("Erreur lecture fichier");}
 	}

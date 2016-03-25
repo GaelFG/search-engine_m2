@@ -19,12 +19,13 @@ import utils.Similarity;
  */
 final public class TermQuery {
 	/** vecteur contenant les termes de la requetes (objets Term) */
-	private Vector<TermQ> terms; 
+	public Vector<TermQ> terms; 
 
 	/**
 	 * Constructeur : construit le vecteur des termes de la requete
 	 */
 	public TermQuery(String query){
+		query = query.toLowerCase();
 		frenchStemmer stemmer = new frenchStemmer();
 		terms=new Vector<TermQ>();
 		System.out.println("La requete est:"+query);
@@ -34,9 +35,10 @@ final public class TermQuery {
 		for (int i = 0 ; i < termstable.length ; i++ ) {
 			String mot = termstable[i];
 			stemmer.setCurrent(mot);
-			if (stemmer.stem()){
+			//if (stemmer.stem()){
+			stemmer.stem();
 				termstable[i] = stemmer.getCurrent();
-			}
+			//}
 		}
 		
 		for (int i=0;i<termstable.length;i++) {

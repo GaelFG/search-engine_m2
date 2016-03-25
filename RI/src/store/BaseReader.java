@@ -146,12 +146,24 @@ public class BaseReader {
 		Statement stmt = null; 
 		ResultSet rs = null;
 		stmt = conn.createStatement(); 
-		String query = "select term_nb from Documents where doc_id= "+doc_id;   
+		String query = "select count(*) from termesdoc where doc_id= "+doc_id;   
 		int nb=0;
 
 		rs = stmt.executeQuery(query);
 		while (rs.next()) { nb=rs.getInt(1);}
 		return nb;     
+	}
+	
+	public int getPoidsTerm(int doc_id, String terme) throws SQLException {
+		int poids=0;
+		Statement stmt = null; 
+		ResultSet rs = null;
+		stmt = conn.createStatement(); 
+		String query = "select td.poids from termes t, termesdoc td where td.doc_id ="+doc_id+" AND t.term =\'"+terme+"\' AND t.term_id=td.term_id;";   
+
+		rs = stmt.executeQuery(query);
+		while (rs.next()) { poids=rs.getInt(1);}
+		return poids;
 	}
 
 	/**

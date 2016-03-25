@@ -177,11 +177,28 @@ public final class IndexWriter {
 		texte=texte.replace('«',' ');
 		texte=texte.replace('»',' ');
 		texte=texte.replace('…',' ');
-
+		texte=texte.replace('�',' ');
+		texte=texte.replace('_',' ');
+		texte=texte.replace('”',' ');
+		texte=texte.replace('“',' ');
+		texte=texte.replace(' ',' ');
+		texte=texte.replace('%',' ');
+		texte=texte.replace('’',' ');
+		texte=texte.replace('#',' ');
+		texte=texte.replace("  "," ");
+		texte=texte.replace("   "," ");
+		texte=texte.replace('é','e');
+		texte=texte.replace('è','e');
+		texte=texte.replace('ê','e');
+		texte=texte.replace('à','a');
+		texte=texte.replace('â','a');
+		texte=texte.replace('ù','u');
+		
 		String[] mots=texte.split(" ");
 		for (int j = 0 ; j < mots.length ; j++) {
 			String mot=mots[j];		// on pourrair utiliser Porter ou la troncature ...!
 			// on verifie que le mot n'est pas un mot vide ou un mot qui contient un @ ou un %
+			mot = mot.trim();
 			if (Stoptable.get(mot)==null) {
 				//TODO test lemmatisation lematisation
 				stemmer.setCurrent(mot);
